@@ -45,6 +45,13 @@ impl<'a, T: 'a> fmt::Debug for ManagedSlice<'a, T>
     }
 }
 
+impl <'a, T: 'a> PartialEq for ManagedSlice<'a, T>
+        where T: PartialEq {
+    fn eq(&self, other: &Self) -> bool {
+        self.deref() == other.deref()
+    }
+}
+
 impl<'a, T: 'a> From<&'a mut [T]> for ManagedSlice<'a, T> {
     fn from(value: &'a mut [T]) -> Self {
         ManagedSlice::Borrowed(value)
